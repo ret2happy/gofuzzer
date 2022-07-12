@@ -1,4 +1,4 @@
-package gofuzzer
+package utils
 
 import (
 	"bytes"
