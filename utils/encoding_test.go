@@ -216,7 +216,7 @@ uint(18446744073709551615)`
 	}
 	for _, test := range tests {
 		t.Run(test.desc, func(t *testing.T) {
-			vals, err := unmarshalCorpusFile([]byte(test.in))
+			vals, err := UnmarshalCorpusFile([]byte(test.in))
 			if test.reject {
 				if err == nil {
 					t.Fatalf("unmarshal unexpected success")
@@ -226,7 +226,7 @@ uint(18446744073709551615)`
 			if err != nil {
 				t.Fatalf("unmarshal unexpected error: %v", err)
 			}
-			newB := marshalCorpusFile(vals...)
+			newB := MarshalCorpusFile(vals...)
 			if err != nil {
 				t.Fatalf("marshal unexpected error: %v", err)
 			}
@@ -261,7 +261,7 @@ func BenchmarkMarshalCorpusFile(b *testing.B) {
 		b.Run(strconv.Itoa(sz), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
 				b.SetBytes(int64(sz))
-				marshalCorpusFile(buf[:sz])
+				MarshalCorpusFile(buf[:sz])
 			}
 		})
 	}

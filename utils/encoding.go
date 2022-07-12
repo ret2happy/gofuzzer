@@ -15,9 +15,9 @@ import (
 // encVersion1 will be the first line of a file with version 1 encoding.
 var encVersion1 = "go test fuzz v1"
 
-// marshalCorpusFile encodes an arbitrary number of arguments into the file format for the
+// MarshalCorpusFile encodes an arbitrary number of arguments into the file format for the
 // corpus.
-func marshalCorpusFile(vals ...any) []byte {
+func MarshalCorpusFile(vals ...any) []byte {
 	if len(vals) == 0 {
 		panic("must have at least one value to marshal")
 	}
@@ -94,8 +94,8 @@ func marshalCorpusFile(vals ...any) []byte {
 	return b.Bytes()
 }
 
-// unmarshalCorpusFile decodes corpus bytes into their respective values.
-func unmarshalCorpusFile(b []byte) ([]any, error) {
+// UnmarshalCorpusFile decodes corpus bytes into their respective values.
+func UnmarshalCorpusFile(b []byte) ([]any, error) {
 	if len(b) == 0 {
 		return nil, fmt.Errorf("cannot unmarshal empty string")
 	}
