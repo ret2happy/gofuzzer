@@ -79,7 +79,6 @@ func ConsumeInt64(cursor *int, fuzzData []byte) (int64, error) {
 
 func ConsumeBigInt(cursor *int, fuzzData []byte, bitLength uint) (big.Int, error) {
 	bakCursor := *cursor
-	//byteLength := 32
 	targetByteLength := int(bitLength / 8)
 	var result big.Int
 	if bakCursor >= len(fuzzData) || bakCursor+targetByteLength > len(fuzzData) || targetByteLength > 32 {
@@ -89,4 +88,12 @@ func ConsumeBigInt(cursor *int, fuzzData []byte, bitLength uint) (big.Int, error
 	*cursor += targetByteLength
 	result.SetBytes(fuzzData[bakCursor : bakCursor+targetByteLength])
 	return result, nil
+}
+
+func ConsumeArray[K any](cursor *int, fuzzData []byte, candidates []K) (K, error) {
+	offset, err := ConsumeUint8Range(cursor, fuzzData, uint8(len(candidates)))
+	if err != nil {
+		return nil, err
+	}
+	return candidates[offset], nil
 }
