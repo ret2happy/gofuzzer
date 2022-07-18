@@ -90,10 +90,15 @@ func ConsumeBigInt(cursor *int, fuzzData []byte, bitLength uint) (big.Int, error
 	return result, nil
 }
 
-func ConsumeArray[K any](cursor *int, fuzzData []byte, candidates []K) (K, error) {
+// ConsumeArray consumes an array element according to the next uint8 value from fuzzData.
+func ConsumeArray[T any](cursor *int, fuzzData []byte, candidates []T) (T, error) {
+	var defaultValue T
+	if len(candidates) == 0 {
+		return defaultValue, fmt.Errorf("empty candidates found")
+	}
 	offset, err := ConsumeUint8Range(cursor, fuzzData, uint8(len(candidates)))
 	if err != nil {
-		return nil, err
+		return defaultValue, err
 	}
 	return candidates[offset], nil
 }
